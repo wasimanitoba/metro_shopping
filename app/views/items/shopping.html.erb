@@ -1,17 +1,20 @@
 
 <b><%= I18n.t('headings.shopping_list') %> </b>
-<div class="shopping-list">
-  <div data-controller="search" data-search-result-outlet=".result">
+<div class="shopping-list" data-controller="shopping" data-shopping-selectable-outlet=".selectable">
+  <div>
     <label><%= I18n.t('labels.create_list') %></label>
-    <div><button data-action="click->shopping#generateShoppingList">Generate</button></div>
+    <div>
+      <%= button_to('Generate', checkout_path, method: 'post', form: { data: { "turbo-frame": "selected-items", action: "click->shopping#generateShoppingList:capture" } }) %>
+    </div>
+    <%= turbo_frame_tag("selected-items") do %>
+    <%- end %>
   </div>
-  <div class="result" data-controller="result">
+  <div class="selectable" data-controller="selectable">
     <div data-controller="filter" class="flex row-reverse justify-apart">
       <filter-input aria-owns="grocery-items-filter-list">
         <label><%= I18n.t('labels.filter') %> </label>
         <input type="text" autofocus autocomplete="off" placeholder="Type item name...">
       </filter-input>
-
     </div>
     <div id="grocery-items-filter-list">
       <div id="items" data-filter-list class="cards">
