@@ -42,8 +42,11 @@ class PackagesController < ApplicationController
 
   # PATCH/PUT /packages/1 or /packages/1.json
   def update
+    current_params = package_params
+    @package.item = Item.find(current_params.delete(:item)[:id]) if package_params[:item].present?
+
     respond_to do |format|
-      if @package.update(package_params)
+      if @package.update(current_params)
         format.html { redirect_to package_url(@package), notice: "Package was successfully updated." }
         format.json { render :show, status: :ok, location: @package }
       else

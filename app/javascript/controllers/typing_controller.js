@@ -23,7 +23,7 @@ export default class extends Controller {
       self.placeholderTarget.innerHTML = a.outerHTML;
     }
 
-     setTimeout(()=>{ looper(); }, 4000);
+     setTimeout(()=>{ looper(); }, 750);
 
      setInterval(()=>{ looper(); }, 7000);
   }

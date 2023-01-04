@@ -2,9 +2,10 @@
 
 ## Features:
 
-- Keep track of groceries and shopping options
-- Compare item prices, cost-per-unit and package weights between stores
-- Create a personalized shopping list based on the best available prices
+| Keep track of groceries and shopping options | ---- |
+| ----- | ----- |
+| Compare item prices, cost-per-unit and package weights between stores  | ![](prices.png) |
+| Create a personalized shopping list based on the best available prices | ![](shopping.png) |
 
 ## Stack:
 
