@@ -1,0 +1,30 @@
+<h1>Current Shopping Prices in Winnipeg</h1>
+
+<div id="items">
+  <h2>Items</h2>
+  <div data-table-url-value="/items"
+       data-table-columns-value="<%= Item.js_columns %>"
+       data-table-height-value="25vh"
+       data-table-title-value="Grocery Products"
+       data-controller="table">
+    <%= render('layouts/partials/tables/export_buttons') %>
+      <div data-table-target="container" id="items-table"></div>
+  </div>
+</div>
+
+<div data-table-url-value="/purchases"
+     data-table-columns-value="<%= Purchase.js_columns %>"
+     data-table-height-value="35vh"
+     data-table-title-value="Purchases"
+     data-controller="table">
+  <h2>Recent Purchases</h2>
+  <%= render('layouts/partials/tables/export_buttons') %>
+    <div data-table-target="container" id="purchases-table"></div>
+</div>
+
+<div class="partial-footer">
+  <!-- These scripts are for exporting tables -->
+  <script type="text/javascript" src="https://oss.sheetjs.com/sheetjs/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.20/jspdf.plugin.autotable.min.js"></script>
+</div>

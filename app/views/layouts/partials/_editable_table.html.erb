@@ -1,0 +1,9 @@
+<div data-editable-table-columns-value="<%= Purchase.js_columns %>"
+     data-editable-table-stores-value="<%= Store.listings %>"
+     data-editable-table-items-value="<%= Item.listings %>"
+     data-controller="editable-table">
+  <button data-action="editable-table#addRows">Add Rows</button>
+  <div data-editable-table-target="container" id="editable-table"></div>
+  <button data-action="editable-table#save">Save</button>
+</div>
+<!-- - let's put this inside a form so it'll have the authenticity token -->

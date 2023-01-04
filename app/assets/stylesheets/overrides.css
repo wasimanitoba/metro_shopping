@@ -1,0 +1,37 @@
+.is-link {
+  background-color: #485fc7;
+  border-color: transparent;
+  color: #fff;
+}
+
+.justify-apart {
+  justify-content: space-between;
+}
+
+.button {
+  background-color: #fff;
+  border-color: #dbdbdb;
+  border-width: 1px;
+  color: #363636;
+  cursor: pointer;
+  justify-content: center;
+  padding-bottom: calc(.5em - 1px);
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-top: calc(.5em - 1px);
+  text-align: center;
+  white-space: nowrap;
+}
+
+
+details.editable_table .tabulator-col,
+details.editable_table .tabulator-content {
+  width: fit-content !important;
+}
+
+[data-controller="editable-table"] .tabulator-tableholder,
+[data-controller="editable-table"] .tabulator-cell {
+  max-height: unset !important;
+  height: unset !important;
+  min-height: 2em;
+}

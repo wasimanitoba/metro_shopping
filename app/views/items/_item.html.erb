@@ -1,0 +1,27 @@
+<div id="<%= dom_id item %>">
+  <%= link_to(tag.h5(item.full_name), item) %>
+
+    <details>
+      <summary>Package Sizes </summary>
+      <strong>
+        <%= item.full_name %>
+      </strong>
+      <ul>
+        <%- item.packages.each do |package| %>
+          <li>
+            <%= package %>
+          </li>
+          <% end %>
+      </ul>
+    </details>
+
+    <details>
+      <summary>Stores:</summary>
+      <p>
+        <%= item.purchases.flat_map { |p| p.store.name }.uniq.join(tag.br).html_safe %>
+      </p>
+      <%- item.filterable_attributes.each do |filterable_attribute| %>
+        <%= filterable_attribute %>
+          <%- end %>
+    </details>
+</div>

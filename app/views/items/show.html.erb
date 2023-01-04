@@ -1,0 +1,37 @@
+<p style="color: green"><%= notice %></p>
+
+<div>
+  <div class="flex">
+    <div data-controller="chart"
+       data-chart-item-value="<%= @item.name %>"
+       data-chart-stores-value="<%= DateTime::ABBR_MONTHNAMES.compact.as_json %>"
+       data-chart-series-value="<%= @item.monthly_prices %>"
+       data-chart-title-value="Historical Prices"
+       data-chart-yLabel-value="Dollars Per Kilogram"
+       data-chart-seriesName-value="price"
+       ></div>
+    <div data-controller="chart"
+       data-chart-item-value="<%= @item.name %>"
+       data-chart-stores-value="<%= @item.series_keys %>"
+       data-chart-series-value="<%= @item.series_values  %>"
+       data-chart-title-value="Prices by Store (in Dollars Per Kilogram)"
+       data-chart-yLabel-value="Dollars Per Kilogram"
+       data-chart-seriesName-value="price"
+       ></div>
+  </div>
+  <hr>
+  <span>Cheapest Prices for: <strong><%= link_to(@item.full_name, @item) %></strong></span>
+  <%= render('items/partials/cheapest', item: @item) %>
+</div>
+
+<div>
+  <%= link_to "Back to items", items_path %>
+  <!-- Haven't implemented user accounts yet -->
+  <!-- TODO: remove this check for the presence of current_user -->
+  <%- if methods.include?(:current_user) && current_user&.admin %>
+    <div>
+      <%= link_to "Edit this item", edit_item_path(@item) %> |
+      <%= button_to "Destroy this item", @item, method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+    </div>
+  <%- end %>
+</div>

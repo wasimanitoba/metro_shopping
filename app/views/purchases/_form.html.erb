@@ -1,0 +1,60 @@
+<%= form_for(purchase) do |form| %>
+  <% if purchase.errors.any? %>
+    <div style="color: red">
+      <h2>
+        <%= pluralize(purchase.errors.count, "error" ) %> prohibited this purchase from being saved:
+      </h2>
+
+      <ul>
+        <% purchase.errors.each do |error| %>
+          <li>
+            <%= error.full_message %>
+          </li>
+          <% end %>
+      </ul>
+    </div>
+    <% end %>
+
+      <div>
+          <%= form.label 'Item', style: "display: block" %>
+          <%= form.select :package, grouped_options_for_select(item_packages), label: 'Item', value: purchase.package&.item %>
+      </div>
+
+      <div>
+        <%= form.label(:price, style: "display: block") { 'Price (Dollars)' } %>
+        $<%= form.number_field :price, min: '0.00', step: 0.01, placeholder: 'Post-discount price' %>
+      </div>
+
+      <details>
+        <summary>Discounts</summary>
+        <div>
+          <%= form.label(:cost, style: "display: block" ) { 'Pre-discount / Original Cost' } %>
+          <%= form.text_field :cost, class: 'calculated_cost' , placeholder: '-' %>
+          <%= form.number_field :cost, step: 0.01, style: "display: none" %>
+        </div>
+
+        <div>
+          <%= form.label :discount, style: "display: block" %>
+          <%= form.number_field :discount, step: 0.01 %>
+        </div>
+      </details>
+
+      <div>
+        <%= form.label :quantity, style: "display: block" %>
+        <%= form.number_field :quantity, value: purchase.quantity %>
+      </div>
+
+      <div>
+        <%= form.label :date, style: "display: block" %>
+        <%= form.date_field :date, value: purchase.date || Date.current, max: Date.current %>
+      </div>
+
+      <div>
+          <%= form.label :store, style: "display: block" %>
+          <%= form.select :store, Store.all.index_with(&:id), label: 'Store', selected: purchase&.store&.name %>
+      </div>
+
+      <div>
+        <%= form.submit %>
+      </div>
+    <% end %>

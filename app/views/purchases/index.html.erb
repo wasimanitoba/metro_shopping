@@ -1,0 +1,17 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Purchases</h1>
+
+<%= link_to "New purchase", new_purchase_path %>
+
+<div class="gridable" id="purchases">
+  <% @purchases.order(date: :desc).each do |purchase| %>
+    <div>
+      <%= render purchase %>
+      <p>
+        <%= link_to "Show this purchase", purchase %>
+      </p>
+    </div>
+  <% end %>
+</div>
+

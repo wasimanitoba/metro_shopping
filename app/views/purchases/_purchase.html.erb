@@ -1,0 +1,41 @@
+<div id="<%= dom_id purchase %>">
+  <p>
+
+    <strong>Price:</strong>
+      <span><%= number_to_currency(purchase.price) %></span>
+      <%- if purchase.discount.nonzero? %>
+
+        [<strong>Discount:</strong>
+        <%= purchase.discount %>]
+        [<strong>Cost:</strong>
+        <%= purchase.cost %>]
+      <%- end %>
+  </p>
+
+
+  <p>
+    <strong>Quantity:</strong>
+    <%= purchase.quantity %>
+  </p>
+
+  <p>
+    <strong>Amount:</strong>
+    <%= purchase.amount %>
+  </p>
+
+  <p>
+    <strong>Date:</strong>
+    <%= purchase.date %>
+  </p>
+
+  <p>
+    <strong>Store:</strong>
+    <%= purchase.store %>
+  </p>
+
+  <p>
+    <strong>Item:</strong>
+    <%= purchase.package %>
+  </p>
+
+</div>

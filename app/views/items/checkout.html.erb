@@ -1,0 +1,27 @@
+<%= turbo_frame_tag("selected-items") do %>
+
+Here are the best prices available for the items you selected:
+  <%- @selected_items.each do |item| %>
+  <%- unless item.cheapest.blank? %>
+
+    <div>
+      <%- unless item.picture.blank? %>
+        <%= image_tag(item.picture, class: 'small-thumbnail', alt: "Thumbnail for #{item.full_name}" )%>
+      <%- end %>
+
+      <p>
+        Best Deal: <%= item.cheapest.formatted %> | Available From: <%= item.cheapest.store %>
+      </p>
+      <p>
+        <%- unless item.other_suppliers.blank? %>
+          All Other Suppliers: <%= item.other_suppliers %>
+        <%- end %>
+        <!-- The user can expand to alter their selection, though, if they want a higher per gram rate with a lower overall total (i.e., smaller package). -->
+        <!-- This should go in a hover card  -->
+      </p>
+    </div>
+    <hr>
+    <%- end %>
+
+   <% end %>
+<%- end %>

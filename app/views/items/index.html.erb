@@ -1,0 +1,19 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Grocery Products</h1>
+
+<div class="gridable" id="items">
+  <% @items.group_by(&:category).each do |category, items| %>
+    <div>
+      <h2><%= category.titleize %></h2>
+
+      <ul>
+        <% items.each do |item| %>
+          <li><%= render(item) %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+</div>
+
+<%= link_to "New item", new_item_path %>

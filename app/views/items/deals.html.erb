@@ -1,0 +1,14 @@
+  <h2>Most Recent Best Deals</h2>
+  <label for="">Selected Period</label>
+  <select disabled name="" id="">
+    <option value="year">This Month</option>
+    <option value="month">This Year</option>
+  </select>
+  <div class="m-1 mini-grid" id="items">
+    <% Item.all.each do |item| %>
+    <div title="Click title to see all deals for this item">
+      <strong><%= link_to(item) %></strong>
+      <%= render('items/partials/cheapest', item: item) %>
+    </div>
+    <% end %>
+  </div>

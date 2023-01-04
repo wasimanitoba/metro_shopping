@@ -1,0 +1,46 @@
+<%= form_with(model: package) do |form| %>
+  <% if package.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(package.errors.count, "error") %> prohibited this package from being saved:</h2>
+
+      <ul>
+        <% package.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div data-controller="calculator" data-calculator-units-value="<%= form.object.class.measurement_units %>">
+    <div class="flex">
+      <div>
+        <%= form.label :measurement_units, style: "display: block" %>
+        <%= form.select :measurement_units, form.object.class.measurement_units.keys, {}, 'data-action': 'calculator#updateUnits' %>
+      </div>
+
+      <div>
+        <%= form.label :measurement, style: "display: block" %>
+        <%= form.number_field :measurement, step: 0.001, value: (package.measurement || 0.001), 'data-action': 'calculator#updatemeasurement' %>
+      </div>
+
+    </div>
+
+      <div class="flex">
+        <%= form.label('Total measurement:', style: "display: block") %>&nbsp;
+        <span data-calculator-target="measurement">1 </span>&nbsp;
+        <span data-calculator-target="units">grams</span>
+      </div>
+  </div>
+
+  <div>
+    <%= form.fields_for(:item) do |subform| %>
+      <%= subform.label :item, style: "display: block" %>
+      <%= subform.select :id, Item.all.map { |item| [item.to_s, item.id] } , label: 'Item' %>
+    <% end %>
+  </div>
+
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,30 @@
+<div
+  class="front-and-center home-grid"
+  data-controller="typing"
+  data-typing-placeholder-value="<%= @items %>"
+  data-typing-target="container">
+    <div class="flex justify-apart">
+      <p class="css-typing"> Lowest Price for: <span data-typing-target="placeholder">________________________________________________</span></p>
+      <div class="flex justify-apart mini-nav-splash-screen">
+        <p><%= link_to("Shopping List", shopping_list_path) %></p>
+        <p><%= link_to("Best Deals", deals_path) %></p>
+        <p><%= link_to("Prices", summary_path) %></p>
+      </div>
+    </div>
+
+    <%- Item.limit(20).each.with_index do |item, index| %>
+    <div class="hidden" data-controller="chart" data-action="resize@window->chart#draw"
+      data-chart-item-value="<%= item.name %>"
+      data-chart-seriesName-value="<%= I18n.t('store_prices_chart.series') %>"
+      data-chart-stores-value="<%= item.series_keys %>" data-chart-series-value="<%= item.series_values %>"
+      data-chart-title-value="<%= I18n.t('store_prices_chart.title') %>">
+      <div class="flex justify-apart">
+        <div><%= image_tag(item.picture, class: 'home-thumbnail', alt: "Thumbnail for #{item.full_name}" ) %></div>
+        <div class="flex-column">
+          <div class="charts" data-chart-target="card"></div>
+        </div>
+      </div>
+    </div>
+    <%- end %>
+</div>
+

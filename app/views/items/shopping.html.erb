@@ -1,0 +1,44 @@
+
+<b><%= I18n.t('headings.shopping_list') %> </b>
+<div class="shopping-list">
+  <div data-controller="search" data-search-result-outlet=".result">
+    <label><%= I18n.t('labels.create_list') %></label>
+    <div><button data-action="click->shopping#generateShoppingList">Generate</button></div>
+  </div>
+  <div class="result" data-controller="result">
+    <div data-controller="filter" class="flex row-reverse justify-apart">
+      <filter-input aria-owns="grocery-items-filter-list">
+        <label><%= I18n.t('labels.filter') %> </label>
+        <input type="text" autofocus autocomplete="off" placeholder="Type item name...">
+      </filter-input>
+
+    </div>
+    <div id="grocery-items-filter-list">
+      <div id="items" data-filter-list class="cards">
+        <% Item.all.each do |item| %>
+          <div id="<%= item.id %>" class="item">
+            <article class="card" data-selectable-target="item">
+              <header  class="content">
+                <span data-filter-item-text>  <%= item.full_name %>  </span>
+              </header>
+              <%= image_tag(item.picture, class: 'card-image' , alt: "Thumbnail for #{item.full_name}" )%>
+                <div class="card-action">
+                  <p>
+                    <label>
+                      <input type="checkbox" name="checkbox_<%= item.id %>" data-selectable-target="input"
+                      data-action="change->selectable#update" id="checkbox_<%= item.id %>">
+                      <span><%= item.category&.titleize %></span> | <%= item.to_s %>
+                    </label>
+                  </p>
+                </div>
+            </article>
+          </div>
+          <% end %>
+      </div>
+      <p data-filter-empty-state hidden>
+        0 matching groceries found.
+        <%= link_to(I18n.t('alerts.no_results_found'), new_item_path) %>
+      </p>
+    </div>
+  </div>
+</div>

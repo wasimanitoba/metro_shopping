@@ -1,0 +1,15 @@
+
+<div class="<%= class_names('flex navbar justify-between', { 'row-reverse': @splash_screen }) %>">
+  <%- unless @splash_screen %>
+    <%= render('/layouts/partials/nav_links') %>
+  <%- end %>
+  <div class="purchases">
+    <p>
+      <%= link_to("All Groceries", items_path) %>
+      <label>[+] Add Purchases: </label>
+      <%= link_to "Bulk" , spreadsheet_path %> /
+      <%= link_to "Single" , new_purchase_path %> |
+      <%= link_to "View All" , purchases_path %>
+    </p>
+  </div>
+</div>
