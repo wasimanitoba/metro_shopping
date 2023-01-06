@@ -10,6 +10,12 @@ export default class extends Controller {
     input.checked ? this.selectable.select(item) : this.selectable.deselect(item);
   }
 
+  selectAll() {
+    for ( const input of this.inputTargets ) {
+      this.selectable.select( input.closest(".item") );
+    }
+  }
+
   connect() {
     const self      = this;
     self.selectable = new Selectable({
@@ -25,12 +31,10 @@ export default class extends Controller {
         }
     }
 
-    // check the checkbox when item is selected
     self.selectable.on("selecteditem", (item) => {
         item.node.querySelector("input").checked = true;
     });
 
-    // uncheck the checkbox when item is deselected
     self.selectable.on("deselecteditem", (item) => {
       item.node.querySelector("input").checked = false;
     });

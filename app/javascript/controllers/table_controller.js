@@ -23,12 +23,15 @@ export default class extends Controller {
   connect() {
     Tabulator.registerModule([AjaxModule, DownloadModule, ExportModule]);
 
-    this.table = new Tabulator(`#${this.containerTarget.id}`, {
+    let settings = {
       layout: "fitColumns",
-      addRowPos: "top",
-      maxHeight: this.heightValue,
-      ajaxURL: this.urlValue,
-      columns: this.columnsValue
-    });
+      addRowPos: "top"
+    }
+
+    if (this.hasHeightValue) settings.maxHeight = this.heightValue;
+    if (this.hasUrlValue) settings.ajaxURL = this.urlValue;
+    if (this.hasColumnsValue) settings.columns = this.columnsValue;
+
+    this.table = new Tabulator(`#${this.containerTarget.id}`, settings);
   }
 }

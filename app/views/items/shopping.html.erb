@@ -15,6 +15,14 @@
         <label><%= I18n.t('labels.filter') %> </label>
         <input type="text" autofocus autocomplete="off" placeholder="Type item name...">
       </filter-input>
+      <div class="flex-column">
+        <label>Unselect all items</label>
+        <button data-action="shopping#clear">Clear</button>
+      </div>
+      <div class="flex-column">
+        <label>Select all items</label>
+        <button data-action="shopping#all">Add All</button>
+      </div>
     </div>
     <div id="grocery-items-filter-list">
       <div id="items" data-filter-list class="cards">
@@ -29,7 +37,7 @@
                   <p>
                     <label>
                       <input type="checkbox" name="checkbox_<%= item.id %>" data-selectable-target="input"
-                      data-action="change->selectable#update" id="checkbox_<%= item.id %>">
+                        data-action="change->selectable#update" id="checkbox_<%= item.id %>">
                       <span><%= item.category&.titleize %></span> | <%= item.to_s %>
                     </label>
                   </p>

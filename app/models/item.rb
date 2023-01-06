@@ -40,6 +40,10 @@ class Item < ApplicationRecord
     Purchase.where(package_id: package_ids)
   end
 
+  def best_deal_for_store(store)
+    purchases.where(store_id: store.id).order(:price_per_unit).limit(1).first
+  end
+
   def series
     purchases.group(:store).order(1).average(:price_per_unit)
   end
@@ -67,12 +71,7 @@ class Item < ApplicationRecord
   end
 
   def other_suppliers
-    store_names  = purchases.map { |purchase| purchase.store.name }
-    return unless cheapest.present?
-
-    non_cheapest = store_names.uniq - [cheapest.store.name]
-
-    non_cheapest.join(' | ')
+    purchases - [cheapest]
   end
 
   def self.listings

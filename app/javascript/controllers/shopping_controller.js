@@ -9,7 +9,17 @@ export default class extends Controller {
     this.gather();
   }
 
+  all() {
+    this.selectableOutlet.selectAll();
+  }
+
+  clear() {
+    this.selectableOutlet.selectable.clear();
+  }
+
   gather() {
+    if (!this.hasSelectableOutlet) return
+
     this.selectedItems = this.selectableOutlet.selectable.getSelectedItems().map((i) => i.node.id );
   }
 

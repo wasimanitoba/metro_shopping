@@ -8,12 +8,9 @@ class ItemsController < ApplicationController
   end
 
   def checkout
-    if params[:selected_item_ids].present?
-      selected_ids    = params[:selected_item_ids].split(',')
-      @selected_items = Item.where(id: selected_ids)
-    else
-      @selected_items = Item.all
-    end
+    @selected_ids   = params[:selected_item_ids].split(',') if params[:selected_item_ids].present?
+
+    @selected_items = Item.where(id: @selected_ids)
   end
 
   # GET /items/1 or /items/1.json
