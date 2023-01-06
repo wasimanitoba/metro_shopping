@@ -1,5 +1,6 @@
 
-.charts {
+.charts,
+[data-chart-target="card"] {
   width: 600px;
   height:400px;
 }

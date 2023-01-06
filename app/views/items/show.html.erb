@@ -9,7 +9,9 @@
        data-chart-title-value="Historical Prices"
        data-chart-yLabel-value="Dollars Per Kilogram"
        data-chart-seriesName-value="price"
-       ></div>
+       >
+       <div data-chart-target="card"></div>
+    </div>
     <div data-controller="chart"
        data-chart-item-value="<%= @item.name %>"
        data-chart-stores-value="<%= @item.series_keys %>"
@@ -17,7 +19,9 @@
        data-chart-title-value="Prices by Store (in Dollars Per Kilogram)"
        data-chart-yLabel-value="Dollars Per Kilogram"
        data-chart-seriesName-value="price"
-       ></div>
+       >
+       <div data-chart-target="card"></div>
+      </div>
   </div>
   <hr>
   <span>Cheapest Prices for: <strong><%= link_to(@item.full_name, @item) %></strong></span>
