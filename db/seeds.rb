@@ -1,7 +1,25 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
-#   Character.create(name: "Luke", movie: movies.first)
+Store.create({"name"=>"Family Foods", "location"=>nil, "deleted"=>false, "owner"=>nil, "place"=>nil})
+Store.create({"name"=>"Costco", "location"=>nil, "deleted"=>false, "owner"=>nil, "place"=>"Lindenwoods"})
+Store.create({"name"=>"Superstore", "location"=>nil, "deleted"=>false, "owner"=>nil, "place"=>"St. James"})
+Store.create({"name"=>"Safeway", "location"=>nil, "deleted"=>false, "owner"=>nil, "place"=>"St. James"})
+Store.create({"name"=>"Walmart", "location"=>nil, "deleted"=>false, "owner"=>nil, "place"=>"St. James"})
+Item.create({"name"=>"coffee", "category"=>"beverages", "brand"=>"starbucks", "filterable_attributes"=>{}, "picture"=>"items/coffee.jpg"})
+Item.create({"name"=>"sugar", "category"=>"pantry", "brand"=>"roger's", "filterable_attributes"=>{}, "picture"=>"items/sugar.jpg"})
+Item.create({"name"=>"individual wet cat food can", "category"=>"pet supplies", "brand"=>"", "filterable_attributes"=>{}, "picture"=>"items/can.png"})
+Item.create({"name"=>"kitty litter", "category"=>"pet supplies", "brand"=>nil, "filterable_attributes"=>{}, "picture"=>"items/kitty_litter.png"})
+Package.create({"measurement_units"=>"weight", "measurement"=>0.156e0, "item_id"=>7})
+Package.create({"measurement_units"=>"weight", "measurement"=>0.907e0, "item_id"=>6})
+Package.create({"measurement_units"=>"weight", "measurement"=>0.4e1, "item_id"=>1})
+Package.create({"measurement_units"=>"weight", "measurement"=>0.1e2, "item_id"=>1})
+Package.create({"measurement_units"=>"weight", "measurement"=>0.127e2, "item_id"=>8})
+Purchase.create({"cost"=>0.1999e2, "discount"=>0.0, "price"=>0.1999e2, "quantity"=>1, "date"=>Date.new(2022, 9, 9), "store_id"=>1, "price_per_unit"=>0.1574015748031496062992125984e1, "package_id"=>1})
+Purchase.create({"cost"=>0.799e1, "discount"=>0.0, "price"=>0.799e1, "quantity"=>1, "date"=>Date.new(2022, 7, 13), "store_id"=>1, "price_per_unit"=>0.19975e1, "package_id"=>4})
+Purchase.create({"cost"=>0.799e1, "discount"=>0.0, "price"=>0.799e1, "quantity"=>1, "date"=>Date.new(2022, 9, 9), "store_id"=>1, "price_per_unit"=>0.19975e1, "package_id"=>4})
+Purchase.create({"cost"=>0.139e1, "discount"=>0.0, "price"=>0.139e1, "quantity"=>1, "date"=>Date.new(2022, 9, 9), "store_id"=>1, "price_per_unit"=>0.8910256410256410256e1, "package_id"=>2})
+Purchase.create({"cost"=>0.2249e2, "discount"=>0.0, "price"=>0.2249e2, "quantity"=>1, "date"=>Date.new(2022, 9, 18), "store_id"=>2, "price_per_unit"=>0.24796030871003307607e2, "package_id"=>3})
+Purchase.create({"cost"=>0.2999e2, "discount"=>0.0, "price"=>0.2999e2, "quantity"=>1, "date"=>Date.new(2022, 8, 24), "store_id"=>1, "price_per_unit"=>0.33065049614112458655e2, "package_id"=>3})
+Purchase.create({"cost"=>0.1167e2, "discount"=>0.0, "price"=>0.1167e2, "quantity"=>1, "date"=>Date.new(2022, 12, 27), "store_id"=>4, "price_per_unit"=>0.1286659316427783903e2, "package_id"=>3})
+Purchase.create({"cost"=>0.1249e2, "discount"=>0.0, "price"=>0.1249e2, "quantity"=>1, "date"=>Date.new(2022, 12, 27), "store_id"=>5, "price_per_unit"=>0.13770672546857772878e2, "package_id"=>3})
+Purchase.create({"cost"=>0.1899e2, "discount"=>0.0, "price"=>0.1899e2, "quantity"=>1, "date"=>Date.new(2022, 12, 27), "store_id"=>3, "price_per_unit"=>0.1899e1, "package_id"=>6})
+Purchase.create({"cost"=>0.1899e2, "discount"=>0.0, "price"=>0.799e1, "quantity"=>1, "date"=>Date.new(2022, 9, 27), "store_id"=>1, "price_per_unit"=>0.19975e1, "package_id"=>4})
+Purchase.create({"cost"=>0.1399e2, "discount"=>0.0, "price"=>0.1399e2, "quantity"=>1, "date"=>Date.new(2022, 12, 30), "store_id"=>5, "price_per_unit"=>0.1399e1, "package_id"=>6})
