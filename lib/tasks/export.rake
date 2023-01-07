@@ -1,5 +1,5 @@
 namespace :export do
-  desc "Export users"
+  desc "Export all data"
   task :seeds => :environment do
     Store.all.each do |store|
       excluded_keys = ['created_at', 'updated_at', 'id']

@@ -1,6 +1,8 @@
+<div  data-controller="table">
+
 <%= turbo_frame_tag("selected-items") do %>
   <%- store_deals=Store.all.map.to_h { |store| [store.name, { price_per_unit: 0, total_price: 0 }] } ; %>
-    <table id="checkout-table">
+    <table id="checkout-table" data-table-target="container">
       <thead>
         <tr>
           <td><p>Item</p></td>
@@ -84,3 +86,5 @@
               </tfoot>
     </table>
     <%- end %>
+
+  </div>

@@ -1,15 +1,16 @@
 
 <b><%= I18n.t('headings.shopping_list') %> </b>
-<div class="shopping-list" data-controller="shopping" data-shopping-selectable-outlet=".selectable">
+<div class="shopping-list"
+     data-controller="shopping"
+     data-shopping-selectable-outlet="#selectable">
   <div>
     <label><%= I18n.t('labels.create_list') %></label>
-    <div>
-      <%= button_to('Generate', checkout_path, method: 'post', form: { data: { "turbo-frame": "selected-items", action: "click->shopping#generateShoppingList:capture" } }) %>
-    </div>
     <%= turbo_frame_tag("selected-items") do %>
     <%- end %>
   </div>
-  <div class="selectable" data-controller="selectable">
+  <div id="selectable"
+       data-controller="selectable"
+       data-selectable-shopping-outlet=".shopping-list">
     <div data-controller="filter" class="flex row-reverse justify-apart">
       <filter-input aria-owns="grocery-items-filter-list">
         <label><%= I18n.t('labels.filter') %> </label>
@@ -28,11 +29,16 @@
       <div id="items" data-filter-list class="cards">
         <% Item.all.each do |item| %>
           <div id="<%= item.id %>" class="item">
-            <article class="card" data-selectable-target="item">
+            <form class="card"
+                  method="post"
+                  data-action="click->shopping#generateShoppingList:prevent"
+                  data-turbo-frame="selected-items"
+                  data-shopping-target="form"
+                  data-selectable-target="item">
               <header  class="content">
                 <span data-filter-item-text>  <%= item.full_name %>  </span>
               </header>
-              <%= image_tag(item.picture, class: 'card-image' , alt: "Thumbnail for #{item.full_name}" )%>
+              <%= image_tag(item.picture, class: 'card-image', alt: "Thumbnail for #{item.full_name}" ) %>
                 <div class="card-action">
                   <p>
                     <label>
@@ -42,7 +48,7 @@
                     </label>
                   </p>
                 </div>
-            </article>
+              </form>
           </div>
           <% end %>
       </div>
@@ -51,5 +57,5 @@
         <%= link_to(I18n.t('alerts.no_results_found'), new_item_path) %>
       </p>
     </div>
-  </div>
+  </form>
 </div>

@@ -2,10 +2,11 @@ import { Controller } from "@hotwired/stimulus"
 import Selectable from 'selectable.js';
 
 export default class extends Controller {
+  static outlets = ['shopping']
   static targets = ['item', 'input']
 
   update(e) {
-    const input = e.currentTarget;
+    const input = e.currentTarget.querySelector('input');
     const item  = input.closest(".item");
     input.checked ? this.selectable.select(item) : this.selectable.deselect(item);
   }
@@ -26,17 +27,19 @@ export default class extends Controller {
     });
 
     for ( const input of this.inputTargets ) {
-        if ( input.checked ) {
-          self.selectable.select( input.closest(".item") );
-        }
+      if ( input.checked ) {
+        self.selectable.select( input.closest(".item") );
+      }
     }
 
     self.selectable.on("selecteditem", (item) => {
-        item.node.querySelector("input").checked = true;
+      item.node.querySelector("input").checked = true;
+      this.shoppingOutlet.generateShoppingList();
     });
 
     self.selectable.on("deselecteditem", (item) => {
       item.node.querySelector("input").checked = false;
+      this.shoppingOutlet.generateShoppingList();
     });
   }
 
