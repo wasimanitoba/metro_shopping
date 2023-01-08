@@ -2,7 +2,9 @@
 <%= turbo_frame_tag("selected-items") do %>
   <div data-controller="table">
     <%= render('layouts/partials/tables/export_buttons') %>
-    <table id="checkout-table" data-table-target="container">
+    <table id="checkout-table"
+           tabulator-movableRows="true"
+           data-table-target="container">
       <thead>
         <tr>
           <th><p>Item</p> </th>

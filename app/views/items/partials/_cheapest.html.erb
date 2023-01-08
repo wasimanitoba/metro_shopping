@@ -1,11 +1,15 @@
 <ul>
-  <p title="<%= " Category: #{item.category}" if item.category.present? %>">
+  <div title="<%= " Category: #{item.category}" if item.category.present? %>">
     <div class="items">
       <div data-table-url-value="/deals?item_name=<%= item.name %>"
            data-table-columns-value="<%= Purchase.js_columns %>"
            data-controller="table">
+           <div class="flex justify-apart">
+            <span>Cheapest Prices for: <strong><%= link_to(item.full_name, item) %></strong></span>
+            <%= render('layouts/partials/tables/export_buttons') %>
+           </div>
         <div data-table-target="container" id="table_for_item_id_<%= item.id %>"></div>
       </div>
     </div>
-  </p>
+  </div>
 </ul>
