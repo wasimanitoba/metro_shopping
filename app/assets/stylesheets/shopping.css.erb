@@ -1,26 +1,28 @@
-body.shopping-page .shopping-list {
-  background-color: rgba(0, 0, 0, 0.72);
-}
-
 body.shopping-page {
-  background-image: url(<%= asset_path 'splash.jpg' %>);
+ /** background-image: url(<%= asset_path 'splash.jpg' %>); */
   max-width: 90m;
 }
 
-body.shopping-page h4 { color: white; }
+body.shopping-page .shopping-list { background-color: rgba(0, 0, 0, 0.20); }
 
+body.shopping-page .highlight { color: orange; }
+body.shopping-page button { border: 1px solid blue; }
+
+body.shopping-page h4 { color: orange; }
+
+body.shopping-page div.tabulator-row:last-child,
+body.shopping-page div.tabulator-row:nth-last-child(2) {
+  background-color: #e9fafd;
+}
+
+.small-thumbnail { width: 5em; }
+
+.thumbnail { width: 10em; }
 
 .shopping-list {
   display: grid;
   grid-template-columns: 2fr 1fr;
-}
-
-.small-thumbnail {
-  width: 5em;
-}
-
-.thumbnail {
-  width: 10em;
+  height: 40em;
 }
 
 /** redundant, get rid of this */

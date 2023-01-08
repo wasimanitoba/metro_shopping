@@ -1,90 +1,86 @@
-<div  data-controller="table">
-
+<%- store_deals = Store.all.map.to_h { |store| [store.name, { price_per_unit: 0, total_price: 0 }] } %>
 <%= turbo_frame_tag("selected-items") do %>
-  <%- store_deals=Store.all.map.to_h { |store| [store.name, { price_per_unit: 0, total_price: 0 }] } ; %>
+  <div data-controller="table">
+    <%= render('layouts/partials/tables/export_buttons') %>
     <table id="checkout-table" data-table-target="container">
       <thead>
         <tr>
-          <td><p>Item</p></td>
+          <th><p>Item</p> </th>
           <%- Store.all.each do |store| %>
-            <td><p><%= store.name.titleize %></p></td>
+            <th><p><%= store.name.titleize %></p></th>
           <%- end %>
         </tr>
       </thead>
-      <%- @selected_items.each do |item| %>
-        <%- unless item.cheapest.blank? %>
-          <tbody>
+      <tbody>
+        <%- @selected_items.each do |item| %>
+          <%- unless item.cheapest.blank? %>
             <tr>
-              <td>
-                <%- unless item.picture.blank? %>
-                  <%= image_tag(item.picture, class: 'small-thumbnail' , alt: "Thumbnail for #{item.full_name}" )%>
-                <%- end %>
-              </td>
-
+              <td> <%- unless item.picture.blank? %><%= image_tag(item.picture, class: 'small-thumbnail' , alt: "Thumbnail for #{item.full_name}" )%> <%- end %>  </td>
 
               <%- Store.all.each do |store| %>
                 <%- store_deal=item.best_deal_for_store(store); %>
-                <%- store_deals[store.name][:price_per_unit] += store_deal&.price_per_unit || 0; %>
-                <%- store_deals[store.name][:total_price]    += store_deal&.price || 0;%>
+                <%- store_deals[store.name][:price_per_unit] +=store_deal&.price_per_unit || 0; %>
+                <%- store_deals[store.name][:total_price] +=store_deal&.price || 0;%>
                 <td>
 
                   <%- if store_deal %>
-                    <%- if store_deal == item.cheapest %>
-                    <p style="color:white" title="Available From: <%= item.cheapest.store %>">
-                      <%= item.cheapest.unit_cost_label %> <br> (Best Deal!)
+                    <%- if store_deal==item.cheapest %>
+                      <p class="highlight" title="Available From: <%= item.cheapest.store %>">
+                        <%= item.cheapest.unit_cost_label %> <br> (Best Deal!)
+                      </p>
+                    <%- else %>
+                      <p>
+                        <%= store_deal.unit_cost_label %>
+                      </p>
+                    <%- end %>
+                  <%- else %>
+                    <p>
+                      <%= 'NO DATA' ; %>
+                      <%- store_deals[store.name][:price_per_unit]=-100_000_000; %>
                     </p>
-                  <%- else %>
-                    <p> <%= store_deal.unit_cost_label  %>  </p>
-                  <%- end %>
-                  <%- else %>
-                  <p>
-                    <%= 'NO DATA';  %>
-                    <%- store_deals[store.name][:price_per_unit] = -100_000_000; %>
-                  </p>
                   <%- end %>
                 </td>
               <%- end %>
             </tr>
-
-          </tbody>
+            <%- end %>
+        <%- end %>
+        <tr>
+          <td><p><b>Store:</b></p></td>
+          <%- minimum=store_deals.filter { |store, totals| totals[:price_per_unit] if (totals[:price_per_unit]>= 0.01) }.sort_by { |store, deal| deal[:price_per_unit] }.first %>
+          <%- store_deals.keys.each do |store| %>
+            <td>
+              <%- if minimum&.first==store %>
+                <p class="highlight"><b> <%= store %> </b></p>
+              <%- else %>
+                <p><%= store %></p>
+              <%- end %>
+            </td>
           <%- end %>
-            <% end %>
-              <tfoot>
-                <tr>
-                  <td></td>
-                  <%- minimum = store_deals.filter { |store, totals| totals[:price_per_unit] if (totals[:price_per_unit] >= 0.01) }.sort_by { |store, deal| deal[:price_per_unit] }.first %>
-                  <%- store_deals.keys.each do |store| %>
-                    <td>
-                      <%- if minimum&.first == store %>
-                      <p style="color:white"><b>Best Value:</b></p>
-                      <h4>  <%= store %></h4>
-                    <%- else %>
-                      <p>Lowest Possible Total for <%= store %>:</p>
-                    <%- end %>
-                    </td>
-                  <%- end %>
 
-                  <%- best_basket_price = minimum&.last&.fetch(:total_price, 0)  %>
-                </tr>
-                <tr>
-                  <td></td>
-                  <%- store_deals.values.each do |total| %>
-                    <td>
-                      <%- if (total[:price_per_unit] >= 0) %>
-                        <%- if total[:total_price] == best_basket_price %>
-                          <b style="color:white" title="(This basket will get you the most value for the lowest price)"><%= number_to_currency(best_basket_price) %></b>
-                        <%- else %>
-                          <b><%= number_to_currency(total[:total_price]) %></b>
-                        <%- end %>
-                      <%- else %>
-                        INSUFFICIENT DATA
-                      <%- end %>
+          <%- best_basket_price=minimum&.last&.fetch(:total_price, 0) %>
+        </tr>
+        <tr>
+          <td><p><b>Total Price:</b></p></td>
+          <%- store_deals.values.each do |total| %>
+            <td>
+              <%- if (total[:price_per_unit]>= 0) %>
+                <%- if total[:total_price]==best_basket_price %>
+                  <p class="highlight" title="(This basket will get you the most value for the lowest price)">
+                    <b><%= number_to_currency(best_basket_price) %></b>
+                    <br>
+                    Best Price!
+                  </p>
+                <%- else %>
+                  <p><b><%= number_to_currency(total[:total_price]) %></b></p>
+                <%- end %>
+              <%- else %>
+                <p>INSUFFICIENT DATA</p>
+              <%- end %>
+            </td>
+          <%- end %>
+        </tr>
+      </tbody>
 
-                    </td>
-                    <%- end %>
-                </tr>
-              </tfoot>
     </table>
-    <%- end %>
-
   </div>
+<%- end %>

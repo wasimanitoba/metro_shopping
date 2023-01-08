@@ -12,7 +12,7 @@ export default class extends Controller {
   }
 
   clear() {
-    this.selectableOutlet.selectable.clear();
+    this.selectableOutlet.clear();
     this.generateShoppingList();
   }
 

@@ -26,12 +26,6 @@ export default class extends Controller {
       toggle: true
     });
 
-    for ( const input of this.inputTargets ) {
-      if ( input.checked ) {
-        self.selectable.select( input.closest(".item") );
-      }
-    }
-
     self.selectable.on("selecteditem", (item) => {
       item.node.querySelector("input").checked = true;
       this.shoppingOutlet.generateShoppingList();
@@ -41,6 +35,12 @@ export default class extends Controller {
       item.node.querySelector("input").checked = false;
       this.shoppingOutlet.generateShoppingList();
     });
+
+    self.clear();
+  }
+
+  clear() {
+    this.selectable.clear();
   }
 
   itemConnectedCallback(item) {
