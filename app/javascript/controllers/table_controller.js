@@ -23,31 +23,20 @@ Tabulator.registerModule([
   MenuModule,
   MoveColumnsModule,
   MoveRowsModule,
-  PrintModule,
   ResizeTableModule,
   ResponsiveLayoutModule,
+  SortModule,
   PageModule,
-  SortModule
+  PrintModule
 ]);
 
 export default class extends Controller {
-  static values = { url: String, title: String, height: String, columns: Array }
-  static targets = ['container']
+  static values = { url: String, fit: Boolean, title: String, height: String, columns: Array }
+  static targets = ['container', 'footer']
 
-  downloadCSV() {
-    self.table.download("csv", "data.csv");
-  }
+  downloadHTML() { this.table.download("html", "data.html", { style: true }); }
 
-  downloadPDF() {
-    self.table.download("pdf", "data.pdf", {
-      orientation: "portrait",
-      title: self.titleValue,
-    });
-  }
-
-  downloadXLSX() { self.table.download("xlsx", "data.xlsx", { sheetName: self.titleValue }); }
-  downloadJSON() { self.table.download("json", "data.json"); }
-  downloadHTML() { self.table.download("html", "data.html", { style: true }); }
+  print() { this.table.print(false, true); }
 
   connect() {
     const self = this;
@@ -56,20 +45,25 @@ export default class extends Controller {
       {
         label:"Hide Column",
         action: function(e, column){
-            column.hide();
+          column.hide();
         }
       },
     ]
 
     let settings = {
-      layout: "fitColumns",
       movableColumns:true,
       movableRows: true,
-      paginationSize: 2,
+      pagination:"local",
+      paginationSize: 10,
       paginationCounter:"rows",
       responsiveLayout: true,
       autoResize: false,
+      printAsHtml: true,
+      footerElement: `#${this.footerTarget.id}`,
+      placeholder:"No Data Available"
     }
+
+    if (this.hasFitValue && this.fitValue) { settings.layout = "fitColumns"; }
 
     if (self.hasHeightValue)  settings.maxHeight = self.heightValue;
     if (self.hasUrlValue)     settings.ajaxURL   = self.urlValue;

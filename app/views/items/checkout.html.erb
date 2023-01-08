@@ -1,6 +1,6 @@
 <%- store_deals = Store.all.map.to_h { |store| [store.name, { price_per_unit: 0, total_price: 0 }] } %>
 <%= turbo_frame_tag("selected-items") do %>
-  <div data-controller="table">
+  <div data-controller="table" data-table-fit-value="<%= @selected_items.present? %>">
     <%= render('layouts/partials/tables/export_buttons') %>
     <table id="checkout-table"
            tabulator-movableRows="true"
@@ -46,22 +46,15 @@
             </tr>
             <%- end %>
         <%- end %>
+      </tbody>
+
+    </table>
+    <table>
+      <tfoot class="tabulator-footer" id="footer" data-table-target="footer">
         <tr>
-          <td><p><b>Store:</b></p></td>
           <%- minimum=store_deals.filter { |store, totals| totals[:price_per_unit] if (totals[:price_per_unit]>= 0.01) }.sort_by { |store, deal| deal[:price_per_unit] }.first %>
-          <%- store_deals.keys.each do |store| %>
-            <td>
-              <%- if minimum&.first==store %>
-                <p class="highlight"><b> <%= store %> </b></p>
-              <%- else %>
-                <p><%= store %></p>
-              <%- end %>
-            </td>
-          <%- end %>
 
           <%- best_basket_price=minimum&.last&.fetch(:total_price, 0) %>
-        </tr>
-        <tr>
           <td><p><b>Total Price:</b></p></td>
           <%- store_deals.values.each do |total| %>
             <td>
@@ -81,8 +74,8 @@
             </td>
           <%- end %>
         </tr>
-      </tbody>
-
+      </tfoot>
     </table>
   </div>
+
 <%- end %>
