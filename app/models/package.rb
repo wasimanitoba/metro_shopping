@@ -40,8 +40,8 @@ class Package < ApplicationRecord
     [ { title: "Amount", field: "amount", sorter: "string" } ]
   end
 
-  def amount
-    number_to_human(measurement, units: measurement_units)
+  def amount(qty = 1)
+    number_to_human(measurement * qty, units: measurement_units)
   end
 
   # changing this affects the implementation of Package.find_by_item_and_measurement

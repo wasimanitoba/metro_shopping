@@ -70,10 +70,12 @@ class Purchase < ApplicationRecord
   def amount
     return package.amount unless quantity > 1
 
-    "#{package.amount} (Quantity: #{quantity})"
+    "#{package.amount} <br> (Quantity: #{quantity})"
   end
 
-  def formatted
-    "#{package.amount} @ #{number_to_currency(price)}"
+  def formatted(qty = nil)
+    selected_quantity = qty || quantity
+
+    "#{package.amount(selected_quantity)} <br> Total Price: #{number_to_currency(price * selected_quantity)}".html_safe
   end
 end

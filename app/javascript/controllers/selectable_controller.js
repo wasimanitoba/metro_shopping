@@ -6,10 +6,10 @@ export default class extends Controller {
   static targets = ['item', 'input']
 
   update(e) {
-    const input = e.currentTarget //.querySelector('input');
+    const input = e.currentTarget;
     const item  = input.closest(".item");
-    input.checked ? this.selectable.select(item) : this.selectable.deselect(item);
-    // this.shoppingOutlet.generateShoppingList();
+    input.checked ? this.selectable.deselect(item) : this.selectable.select(item);
+    console.log({item, checked: item.checked, input, e })
   }
 
   selectAll() {
@@ -22,7 +22,7 @@ export default class extends Controller {
     const self      = this;
     self.selectable = new Selectable({
       filter: ".item",
-      ignore: ["input", "select"],
+      ignore: ["input", "select", "summary"],
       appendTo: "#items",
       toggle: true
     });

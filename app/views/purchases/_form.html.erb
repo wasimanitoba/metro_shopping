@@ -17,7 +17,7 @@
 
       <div>
           <%= form.label 'Item', style: "display: block" %>
-          <%= form.select :package, grouped_options_for_select(item_packages), label: 'Item', value: purchase.package&.item %>
+          <%= form.select :package, option_groups_from_collection_for_select(Item.all, :packages, :full_name, :id, :select_label, purchase.package.id), label: 'Item' %>
       </div>
 
       <div>
@@ -51,7 +51,7 @@
 
       <div>
           <%= form.label :store, style: "display: block" %>
-          <%= form.select :store, Store.all.index_with(&:id), label: 'Store', selected: purchase&.store&.name %>
+          <%= form.select :store, Store.all.index_with(&:id), selected: purchase&.store&.id %>
       </div>
 
       <div>

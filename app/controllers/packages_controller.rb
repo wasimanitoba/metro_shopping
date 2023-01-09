@@ -9,14 +9,20 @@ class PackagesController < ApplicationController
   end
 
   def checkout
-    if params[:pkg].present?
-      @selected_items = Package.where(id: params[:pkg].split(',')).map(&:item)
+    pkg   = JSON.parse params[:pkg]
+    items = JSON.parse params[:items]
 
-      @selected_items = @selected_items.where(id: params[:selected_item_ids]) if params[:selected_item_ids].present?
-    elsif params[:items].present?
-      @selected_items = Item.where(id: params[:items].split(','))
+    # if pkg.present?
+      # packages = Package.where(id: pkg.split(','))
+
+      # @selected_items = packages.map(&:item)
+
+      # @selected_items = @selected_items.where(id: params[:items]) if params[:items].present?
+      # elsif items.present?
+    if items.present?
+      @selected_items = items.map.to_h { |id, qty| [id, { item: Item.find(id), qty: qty } ] }
     else
-      @selected_items = Item.none
+      @selected_items = {}
     end
   end
 

@@ -34,23 +34,22 @@
                   data-turbo-frame="selected-items"
                   data-shopping-target="form"
                   data-selectable-target="item">
-              <header  class="content"><span data-filter-item-text><%= item.full_name %></span></header>
+              <header class="content"><span data-filter-item-text><%= item.full_name %></span></header>
               <%= image_tag(item.picture, class: 'card-image', alt: "Thumbnail for #{item.full_name}", 'data-action': "click->shopping#generateShoppingList:prevent" ) %>
-              <div class="card-action">
-                <div class="flex justify-apart">
-                  <p>
-                    <label>
+              <div class="card-action flex justify-apart">
+                 <details>
+                    <summary>
+                      <label>Package Sizes</label>
+
                       <input type="checkbox"
-                             name="checkbox_<%= item.id %>"
-                             data-selectable-target="input"
-                             data-action="change->selectable#update"
-                             id="checkbox_<%= item.id %>">
-                    </label>
-                  </p>
-                  <div>
-                    <%= select_tag(:package, options_from_collection_for_select(item.packages, :id, :amount), include_blank: "All Sizes") %>
-                  </div>
-                </div>
+                        name="checkbox_<%= item.id %>"
+                        data-selectable-target="input"
+                        data-action="change->selectable#update"
+                        id="checkbox_<%= item.id %>">
+                    </summary>
+                    <%= number_field_tag(:quantity, 1, min: 1, 'data-action': 'change->selectable#update') %>
+                    <%= select_tag(:package, options_from_collection_for_select(item.packages, :id, :amount), include_blank: "All Sizes", 'data-action': 'change->selectable#update') %>
+                 </details>
               </div>
             </form>
           </div>
