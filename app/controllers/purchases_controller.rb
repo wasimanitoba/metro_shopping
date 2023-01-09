@@ -26,11 +26,12 @@ class PurchasesController < ApplicationController
 
   def bulk_create
     purchases = params.permit(bulk_purchases: purchase_attributes).values.flatten
+
     failures  = purchases.filter_map do |purchase_details|
       next if purchase_details.blank?
 
       store     = Store.find_by(name: purchase_details.delete(:store))
-      package   = Package.find_by_item_and_measurement(purchase_details.delete(:item_package))
+      package   = Package.find_by_item_and_measurement(purchase_details.delete(:item_package).downcase)
 
       @purchase = Purchase.new(purchase_details.merge({ store: store, package: package }))
 
@@ -111,12 +112,12 @@ class PurchasesController < ApplicationController
       params.require(:purchase).permit(:price, :cost, :discount, :quantity, :measurement, :measurement_units, :date, :package, :id, :store, :item_package)
     end
 
-    # def purchase_attributes
-    #   [ :price, :cost, :discount,
-    #     :quantity, :measurement, :measurement_units,
-    #     :store, :store_id, :date, :item,
-    #     :package_id, :package, :item_package,
-    #     :purchase,
-    #     package: :id, store: :id ]
-    # end
+    def purchase_attributes
+      [ :price, :cost, :discount,
+        :quantity, :measurement, :measurement_units,
+        :store, :store_id, :date, :item,
+        :package_id, :package, :item_package,
+        :purchase,
+        package: :id, store: :id ]
+    end
 end

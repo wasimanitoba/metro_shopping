@@ -31,26 +31,30 @@
           <div id="<%= item.id %>" class="item">
             <form class="card"
                   method="post"
-                  data-action="click->shopping#generateShoppingList:prevent"
                   data-turbo-frame="selected-items"
                   data-shopping-target="form"
                   data-selectable-target="item">
-              <header  class="content">
-                <span data-filter-item-text>  <%= item.full_name %>  </span>
-              </header>
-              <%= image_tag(item.picture, class: 'card-image', alt: "Thumbnail for #{item.full_name}" ) %>
-                <div class="card-action">
+              <header  class="content"><span data-filter-item-text><%= item.full_name %></span></header>
+              <%= image_tag(item.picture, class: 'card-image', alt: "Thumbnail for #{item.full_name}", 'data-action': "click->shopping#generateShoppingList:prevent" ) %>
+              <div class="card-action">
+                <div class="flex justify-apart">
                   <p>
                     <label>
-                      <input type="checkbox" name="checkbox_<%= item.id %>" data-selectable-target="input"
-                        data-action="change->selectable#update" id="checkbox_<%= item.id %>">
-                      <span><%= item.category&.titleize %></span> | <%= item.to_s %>
+                      <input type="checkbox"
+                             name="checkbox_<%= item.id %>"
+                             data-selectable-target="input"
+                             data-action="change->selectable#update"
+                             id="checkbox_<%= item.id %>">
                     </label>
                   </p>
+                  <div>
+                    <%= select_tag(:package, options_from_collection_for_select(item.packages, :id, :amount), include_blank: "All Sizes") %>
+                  </div>
                 </div>
-              </form>
+              </div>
+            </form>
           </div>
-          <% end %>
+        <% end %>
       </div>
       <p data-filter-empty-state hidden>
         0 matching groceries found.

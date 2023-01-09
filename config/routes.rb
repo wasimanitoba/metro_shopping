@@ -21,7 +21,8 @@ Rails.application.routes.draw do
   get 'deals', to: 'items#deals'
   get 'summary', to: 'items#summary'
   get 'shopping_list', to: "items#shopping"
-  post 'checkout', to: "items#checkout", as: :checkout
+  get 'checkout_preview', to: "packages#checkout"
+  post 'checkout', to: "packages#checkout", as: :checkout
   # Defines the root path route ("/")
   root "home#index"
 end

@@ -2,9 +2,9 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static outlets = [ "selectable"]
-  static targets = ["form" ]
+  static targets = [ "form", "package" ]
 
-  selectedItems = []
+  selection = {}
 
   all() {
     this.selectableOutlet.selectAll();
@@ -18,16 +18,29 @@ export default class extends Controller {
 
   gather() {
     if (this.hasSelectableOutlet) {
-      this.selectedItems = this.selectableOutlet.selectable.getSelectedItems().map((i) => i.node.id );
+      let selectedPackages       = this.selectableOutlet.selectable.getSelectedItems();
+      this.selection['packages'] = [];
+      this.selection['items']    = [];
+
+      selectedPackages.map((i) => {
+        let value = i.node.querySelector('select').value;
+
+        if (value) { this.selection['packages'].push(value);     }
+        else       { this.selection['items'].push(i.node.id); }
+      });
     }
   }
 
   generateShoppingList() {
-    let form = this.formTarget;
-
     this.gather();
 
-    form.action = `/checkout/?${new URLSearchParams({ selected_item_ids: this.selectedItems })}`
+    // Intended for each form to be used independently but right now we're invoking the first form every time
+    let form  = this.formTarget;
+    let items = this.selection['items'];
+    let pkg   = this.selection['packages'];
+
+    let checkoutParams = new URLSearchParams({ pkg, items })
+    form.action = `/checkout/?${checkoutParams}`;
 
     form.requestSubmit();
   }

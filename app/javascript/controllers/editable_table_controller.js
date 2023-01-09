@@ -55,8 +55,8 @@ initialize() {
     layout: "fitColumns",
     addRowPos: "top",
     columns: [
-      { title: 'Product', field: 'item_package', editor: 'list', editorParams: { values: items }, clearable:true, multiselect:true, listOnEmpty:true },
-      { title: 'Store', field: 'store', editor: 'list', editorParams: { values: stores }, clearable:true, multiselect:true, listOnEmpty:true },
+      { title: 'Product', field: 'item_package', editor: 'list', editorParams: { values: items }, clearable:true, listOnEmpty:true },
+      { title: 'Store', field: 'store', editor: 'list', editorParams: { values: stores }, clearable:true, listOnEmpty:true },
       { title: 'Quantity', field: 'quantity', sorter: 'number', editor: true },
       { title: 'Total Price ($)', field: 'price', sorter: 'number', editor: true },
       // TODO: Use Luxon to impose format (https://tabulator.info/docs/5.4/edit#editor-date) and add min/max validations as follows:

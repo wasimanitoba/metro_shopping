@@ -8,6 +8,18 @@ class PackagesController < ApplicationController
     # @packages = @packages.joins('JOIN items on items.id = packages.item_id').where('items.name LIKE ?', "%#{params[:item_name]}%") if params[:item_name]
   end
 
+  def checkout
+    if params[:pkg].present?
+      @selected_items = Package.where(id: params[:pkg].split(',')).map(&:item)
+
+      @selected_items = @selected_items.where(id: params[:selected_item_ids]) if params[:selected_item_ids].present?
+    elsif params[:items].present?
+      @selected_items = Item.where(id: params[:items].split(','))
+    else
+      @selected_items = Item.none
+    end
+  end
+
   # GET /packages/1 or /packages/1.json
   def show
   end

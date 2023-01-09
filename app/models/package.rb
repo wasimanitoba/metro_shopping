@@ -46,7 +46,7 @@ class Package < ApplicationRecord
 
   # changing this affects the implementation of Package.find_by_item_and_measurement
   def to_s
-    [item.full_name, amount].join(tag.br).html_safe
+    [item.name.titleize, amount].join(tag.br).html_safe
   end
 
   def select_label
